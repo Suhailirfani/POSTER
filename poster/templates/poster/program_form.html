@@ -1,0 +1,44 @@
+{% extends 'poster/base.html' %}
+
+{% block content %}
+<div class="form-section" style="max-width: 600px; margin: 0 auto;">
+    <h2 style="margin-top: 0;">{% if is_edit %}Edit Program: {{ program.name }}{% else %}Create New Program{% endif %}</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+            <p style="margin-top:0.5rem; font-size:0.9rem; color:var(--text-muted);">OR upload an image:</p>
+            {{ form.name_image }}
+        </div>
+        <div class="form-group">
+            {{ form.date.label_tag }}
+            {{ form.date }}
+        </div>
+        <div class="form-group">
+            {{ form.place.label_tag }}
+            {{ form.place }}
+        </div>
+        <div class="form-group">
+            {{ form.authority.label_tag }}
+            {{ form.authority }}
+            <p style="margin-top:0.5rem; font-size:0.9rem; color:var(--text-muted);">OR upload an image:</p>
+            {{ form.authority_image }}
+        </div>
+        <div class="form-group">
+            {{ form.categories.label_tag }}
+            {{ form.categories }}
+            <p style="margin-top:0.2rem; font-size:0.8rem; color:var(--text-muted);">Optional: Define categories (e.g. Junior, Senior) separated by commas.</p>
+        </div>
+        <div class="form-group">
+            {{ form.teams.label_tag }}
+            {{ form.teams }}
+            <p style="margin-top:0.2rem; font-size:0.8rem; color:var(--text-muted);">Optional: Define teams (e.g. Red House, Blue House) separated by commas.</p>
+        </div>
+        <button type="submit" class="btn-primary">Save Program</button>
+        <div style="text-align: center; margin-top: 1rem;">
+            <a href="{% url 'poster:home' %}" style="color: var(--text-muted); text-decoration: none;">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

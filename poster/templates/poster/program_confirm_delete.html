@@ -1,0 +1,15 @@
+{% extends 'poster/base.html' %}
+
+{% block content %}
+<div class="form-section" style="max-width: 600px; margin: 0 auto; text-align: center;">
+    <h2 style="margin-top: 0; color: #dc2626;">Delete Program?</h2>
+    <p style="font-size: 1.2rem;">Are you sure you want to delete the program <strong>"{{ program.name }}"</strong>?</p>
+    <p style="color: var(--text-muted); margin-bottom: 2rem;">This action cannot be undone.</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn-primary" style="background-color: #dc2626; width: auto; display: inline-block; margin-right: 1rem;">Yes, Delete</button>
+        <a href="{% url 'poster:program_detail' program.pk %}" class="btn-secondary" style="margin-top: 0; display: inline-block;">Cancel</a>
+    </form>
+</div>
+{% endblock %}

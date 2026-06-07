@@ -1,0 +1,91 @@
+{% extends 'poster/base.html' %}
+
+{% block content %}
+<form method="post" action="{% url 'poster:preview' %}">
+    {% csrf_token %}
+    
+    <div class="form-section">
+        <h2>Program Details</h2>
+        <div class="form-grid">
+            <div class="form-group">
+                {{ form.program_name.label_tag }}
+                {{ form.program_name }}
+            </div>
+            <div class="form-group">
+                {{ form.event_date.label_tag }}
+                {{ form.event_date }}
+            </div>
+            <div class="form-group">
+                {{ form.place.label_tag }}
+                {{ form.place }}
+            </div>
+            <div class="form-group">
+                {{ form.authority.label_tag }}
+                {{ form.authority }}
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+                {{ form.item_name.label_tag }}
+                {{ form.item_name }}
+            </div>
+        </div>
+
+        <div class="winners-section">
+            <h2>Winners</h2>
+            
+            <div class="winner-row">
+                <div class="form-group">
+                    {{ form.first_name.label_tag }}
+                    {{ form.first_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.first_grade.label_tag }}
+                    {{ form.first_grade }}
+                </div>
+            </div>
+
+            <div class="winner-row">
+                <div class="form-group">
+                    {{ form.second_name.label_tag }}
+                    {{ form.second_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.second_grade.label_tag }}
+                    {{ form.second_grade }}
+                </div>
+            </div>
+
+            <div class="winner-row">
+                <div class="form-group">
+                    {{ form.third_name.label_tag }}
+                    {{ form.third_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.third_grade.label_tag }}
+                    {{ form.third_grade }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h2>Select Template</h2>
+        {{ form.template_id }}
+        
+        <div class="template-gallery">
+            {% for i in templates_range %}
+            <div class="template-card {% if forloop.first %}selected{% endif %}" data-id="{{ i }}">
+                <div class="preview-wrapper">
+                    <!-- We can render a miniature version of the template or an image here. For now, a placeholder or colored box -->
+                    <div style="background: hsl({{ i|add:'10'|add:i|add:'50' }}, 70%, 80%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                         <span style="font-size: 2rem; font-weight: bold; color: rgba(0,0,0,0.5);">{{ i }}</span>
+                    </div>
+                </div>
+                <div class="template-label">Template {{ i }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <button type="submit" class="btn-primary">Preview & Download</button>
+</form>
+{% endblock %}

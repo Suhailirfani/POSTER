@@ -1,0 +1,38 @@
+{% extends 'poster/base.html' %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <h2>Your Programs</h2>
+    <a href="{% url 'poster:create_program' %}" class="btn-primary" style="width: auto; margin-top: 0;">+ Create New Program</a>
+</div>
+
+<div class="template-gallery" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+    {% for program in programs %}
+        <div class="form-section template-card" style="padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s; height: 100%; position: relative;">
+            <a href="{% url 'poster:program_detail' program.pk %}" style="text-decoration: none; color: inherit; display: block;">
+                {% if program.name_image %}
+                    <img src="{{ program.name_image.url }}" alt="{{ program.name }}" style="max-height: 40px; margin-bottom: 0.5rem; display: block;">
+                {% else %}
+                    <h3 style="color: var(--primary-color); margin-top: 0; margin-bottom: 0.5rem; font-size: 1.5rem;">{{ program.name }}</h3>
+                {% endif %}
+                <p style="margin: 0.2rem 0; color: var(--text-muted);"><strong>Date:</strong> {{ program.date }}</p>
+                <p style="margin: 0.2rem 0; color: var(--text-muted);"><strong>Place:</strong> {{ program.place }}</p>
+                <p style="margin: 0.2rem 0; color: var(--text-muted); display: flex; align-items: center; gap: 5px;">
+                    <strong>Authority:</strong> 
+                    {% if program.authority_image %}
+                        <img src="{{ program.authority_image.url }}" alt="{{ program.authority }}" style="max-height: 20px;">
+                    {% else %}
+                        {{ program.authority }}
+                    {% endif %}
+                </p>
+            </a>
+            <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); display: flex; justify-content: space-between;">
+                <a href="{% url 'poster:edit_program' program.pk %}" style="color: var(--primary-color); text-decoration: none; font-size: 0.9rem; font-weight: 600;">Edit</a>
+                <a href="{% url 'poster:delete_program' program.pk %}" style="color: #dc2626; text-decoration: none; font-size: 0.9rem; font-weight: 600;">Delete</a>
+            </div>
+        </div>
+    {% empty %}
+    <p>No programs created yet. Click "Create New Program" to get started.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'poster/base.html' %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 2rem;">
+    <a href="{% url 'poster:program_detail' program.pk %}" class="btn-secondary">&larr; Back to Edit</a>
+    <button id="download-btn" class="btn-primary" style="width: auto; margin-top: 0; margin-left: 1rem;">Download Poster (JPEG)</button>
+</div>
+
+<div class="poster-container">
+    <div class="poster-wrapper" id="poster-node">
+        {% include template_name %}
+    </div>
+</div>
+{% endblock %}

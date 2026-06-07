@@ -1,0 +1,88 @@
+<div class="poster-content" style="position: relative; width: 100%; height: 100%; background: linear-gradient(135deg, #F0C05A, #D19124); color: #2D1A05; overflow: hidden; font-family: serif; box-sizing: border-box; padding: 4rem;">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- SVG Noise Texture Overlay -->
+    <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.4; z-index: 10; pointer-events: none;" xmlns="http://www.w3.org/2000/svg">
+        <filter id="noiseFilter">
+            <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" stitchTiles="stitch"/>
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noiseFilter)"/>
+    </svg>
+
+    
+    <!-- Top Right: Category & Item -->
+    <div style="position: absolute; top: 4rem; right: 4rem; text-align: right; z-index: 5;">
+        {% if data.category %}
+        <h3 style="margin: 0; font-size: 2rem; font-weight: 400; color: #2D1A05; opacity: 0.9;">{{ data.category }}</h3>
+        {% endif %}
+        <h2 style="margin: 0; font-size: 3.5rem; font-weight: 900; line-height: 1.1; color: #5E1813; max-width: 500px;">{{ data.item_name }}</h2>
+    </div>
+
+    <!-- Background Icon -->
+    <i class="fa-solid fa-fingerprint" style="position: absolute; left: 5%; top: 15%; font-size: 55rem; opacity: 0.05; z-index: 1;"></i>
+
+    <!-- Center/Right: Huge Numbers & Winners -->
+    <div style="position: absolute; top: 30%; right: 4rem; width: 60%; display: flex; flex-direction: column; gap: 3rem; z-index: 4;">
+        
+        {% if data.first_name %}
+        <div style="position: relative; padding-left: 1rem;">
+            <div style="font-size: 10rem; font-weight: 100; color: rgba(255,255,255,0.15); line-height: 0.8; font-family: 'Georgia', serif; position: absolute; left: 0; top: -3rem; z-index: -1;">01</div>
+            <div style="font-size: 2.8rem; font-weight: 800; color: #2D1A05; line-height: 1.1;">{{ data.first_name }}</div>
+            <div style="font-size: 1.4rem; color: #2D1A05; opacity: 0.8; margin-top: 0.5rem; letter-spacing: 1px;">{{ data.first_team }} &nbsp;&bull;&nbsp; {{ data.first_grade }}</div>
+        </div>
+        {% endif %}
+        
+        {% if data.second_name %}
+        <div style="position: relative; padding-left: 1rem; margin-top: 1rem;">
+            <div style="font-size: 8rem; font-weight: 100; color: rgba(255,255,255,0.1); line-height: 0.8; font-family: 'Georgia', serif; position: absolute; left: 0; top: -2rem; z-index: -1;">02</div>
+            <div style="font-size: 2.2rem; font-weight: 700; color: #2D1A05; line-height: 1.1;">{{ data.second_name }}</div>
+            <div style="font-size: 1.2rem; color: #2D1A05; opacity: 0.8; margin-top: 0.5rem;">{{ data.second_team }} &nbsp;&bull;&nbsp; {{ data.second_grade }}</div>
+        </div>
+        {% endif %}
+
+        {% if data.third_name %}
+        <div style="position: relative; padding-left: 1rem; margin-top: 1rem;">
+            <div style="font-size: 8rem; font-weight: 100; color: rgba(255,255,255,0.1); line-height: 0.8; font-family: 'Georgia', serif; position: absolute; left: 0; top: -2rem; z-index: -1;">03</div>
+            <div style="font-size: 2.2rem; font-weight: 700; color: #2D1A05; line-height: 1.1;">{{ data.third_name }}</div>
+            <div style="font-size: 1.2rem; color: #2D1A05; opacity: 0.8; margin-top: 0.5rem;">{{ data.third_team }} &nbsp;&bull;&nbsp; {{ data.third_grade }}</div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Result Badge Left -->
+    <div style="position: absolute; bottom: 20%; left: 4rem; background: #5E1813; color: #2D1A05; padding: 1rem 3rem; font-size: 3rem; font-weight: 900; letter-spacing: -1px; transform: rotate(-5deg); z-index: 5; box-shadow: 5px 5px 0px rgba(0,0,0,0.2);">
+        RESULTS
+    </div>
+
+    
+        <!-- Bottom: Program Name & Authority -->
+        <div style="position: absolute; bottom: 3rem; left: 0; width: 100%; display: flex; justify-content: center; z-index: 5; text-align: center;">
+            <div style="display: flex; flex-direction: column; align-items: center; max-width: 80vw; gap: 0.5rem;">
+                <!-- Line 1: Program Name -->
+                <div>
+                    {% if program.name_image %}
+                    <img src="{{ program.name_image.url }}" style="max-height: 100px; max-width: 100%; object-fit: contain; display: block; margin: 0 auto;">
+                    {% elif data.program_name %}
+                    <h1 style="margin: 0; font-size: 5rem; font-weight: 900; color: #5E1813; font-family: 'Georgia', serif; letter-spacing: -2px; line-height: 1;">{{ data.program_name }}</h1>
+                    {% endif %}
+                </div>
+                
+                <!-- Line 2: Authority Name -->
+                <div style="color: #2D1A05; font-size: 1.4rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase;">
+                    {% if program.authority_image %}
+                    <img src="{{ program.authority_image.url }}" style="max-height: 40px; object-fit: contain; display: block; margin: 0 auto;">
+                    {% elif data.authority %}
+                    {{ data.authority }}
+                    {% endif %}
+                </div>
+
+                <!-- Line 3: Remaining Details -->
+                <div style="color: #2D1A05; font-size: 1.1rem; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; opacity: 0.9;">
+                    {{ data.place }} &nbsp;&bull;&nbsp; {{ data.event_date }}
+                </div>
+            </div>
+        </div>
+
+</div>

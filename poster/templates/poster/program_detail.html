@@ -1,0 +1,119 @@
+{% extends 'poster/base.html' %}
+
+{% block content %}
+<div style="margin-bottom: 2rem;">
+    <a href="{% url 'poster:home' %}" class="btn-secondary">&larr; Back to Programs</a>
+</div>
+
+<div class="form-section" style="background: #eef2ff; border: 1px solid #c7d2fe; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        {% if program.name_image %}
+            <img src="{{ program.name_image.url }}" alt="{{ program.name }}" style="max-height: 50px; margin-bottom: 0.5rem; display: block;">
+        {% else %}
+            <h2 style="margin-top: 0; color: #3730a3;">{{ program.name }}</h2>
+        {% endif %}
+        
+        <p style="margin: 0; display: flex; align-items: center; gap: 10px;">
+            <strong>Date:</strong> {{ program.date }} &nbsp;|&nbsp; 
+            <strong>Place:</strong> {{ program.place }} &nbsp;|&nbsp; 
+            <strong>Authority:</strong> 
+            {% if program.authority_image %}
+                <img src="{{ program.authority_image.url }}" alt="{{ program.authority }}" style="max-height: 30px; display: inline-block; vertical-align: middle;">
+            {% else %}
+                {{ program.authority }}
+            {% endif %}
+        </p>
+    </div>
+    <div style="display: flex; gap: 10px;">
+        <a href="{% url 'poster:edit_program' program.pk %}" class="btn-primary" style="margin-top: 0; padding: 0.5rem 1rem; text-decoration: none; font-size: 0.9rem;">Edit</a>
+        <a href="{% url 'poster:delete_program' program.pk %}" class="btn-primary" style="margin-top: 0; padding: 0.5rem 1rem; background-color: #dc2626; text-decoration: none; font-size: 0.9rem;">Delete</a>
+    </div>
+</div>
+
+<form method="post" action="{% url 'poster:preview' program.pk %}">
+    {% csrf_token %}
+    
+    <div class="form-section">
+        <h2>Add Item & Winners</h2>
+        <div class="form-grid">
+            <div class="form-group">
+                {{ form.item_name.label_tag }}
+                {{ form.item_name }}
+            </div>
+            <div class="form-group">
+                {{ form.category.label_tag }}
+                {{ form.category }}
+            </div>
+        </div>
+
+        <div class="winners-section">
+            <h2>Winners</h2>
+            
+            <div class="winner-row" style="grid-template-columns: 2fr 1fr 1.5fr;">
+                <div class="form-group">
+                    {{ form.first_name.label_tag }}
+                    {{ form.first_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.first_grade.label_tag }}
+                    {{ form.first_grade }}
+                </div>
+                <div class="form-group">
+                    {{ form.first_team.label_tag }}
+                    {{ form.first_team }}
+                </div>
+            </div>
+
+            <div class="winner-row" style="grid-template-columns: 2fr 1fr 1.5fr;">
+                <div class="form-group">
+                    {{ form.second_name.label_tag }}
+                    {{ form.second_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.second_grade.label_tag }}
+                    {{ form.second_grade }}
+                </div>
+                <div class="form-group">
+                    {{ form.second_team.label_tag }}
+                    {{ form.second_team }}
+                </div>
+            </div>
+
+            <div class="winner-row" style="grid-template-columns: 2fr 1fr 1.5fr;">
+                <div class="form-group">
+                    {{ form.third_name.label_tag }}
+                    {{ form.third_name }}
+                </div>
+                <div class="form-group">
+                    {{ form.third_grade.label_tag }}
+                    {{ form.third_grade }}
+                </div>
+                <div class="form-group">
+                    {{ form.third_team.label_tag }}
+                    {{ form.third_team }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-section">
+        <h2>Select Template</h2>
+        {{ form.template_id }}
+        
+        <div class="template-gallery">
+            {% for i in templates_range %}
+            <div class="template-card {% if forloop.first %}selected{% endif %}" data-id="{{ i }}">
+                <div class="preview-wrapper">
+                    <div style="background: hsl({{ i|add:'10'|add:i|add:'50' }}, 70%, 80%); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                         <span style="font-size: 2rem; font-weight: bold; color: rgba(0,0,0,0.5);">{{ i }}</span>
+                    </div>
+                </div>
+                <div class="template-label">Template {{ i }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <button type="submit" class="btn-primary">Preview & Download</button>
+</form>
+{% endblock %}
